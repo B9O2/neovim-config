@@ -1,0 +1,13 @@
+lazy/
+
+Session.vim
+*.swp
+*.swo
+*.swn
+*.un~
+*.bak
+*.tmp
+
+*.log
+
+.netrwhist
