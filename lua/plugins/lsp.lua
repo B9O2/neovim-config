@@ -1,5 +1,42 @@
 return {
   "neovim/nvim-lspconfig",
+  opts = {
+    servers = {
+      pyright = {
+        before_init = function(_, config)
+          local venv_path = require("venv-selector").python()
+          if venv_path and venv_path ~= "" then
+            config.settings = config.settings or {}
+            config.settings.python = config.settings.python or {}
+            config.settings.python.pythonPath = venv_path
+          end
+        end,
+      },
+      ruff_lsp = {
+        cmd_env = { RUFF_TRACE = "messages" },
+        init_options = {
+          settings = {
+            logLevel = "error",
+          },
+        },
+        keys = {
+          {
+            "<leader>co",
+            LazyVim.lsp.action["source.organizeImports"],
+            desc = "Organize Imports",
+          },
+        },
+      },
+    },
+    setup = {
+      ["ruff_lsp"] = function()
+        LazyVim.lsp.on_attach(function(client, _)
+          -- Disable hover in favor of Pyright
+          client.server_capabilities.hoverProvider = false
+        end, "ruff_lsp")
+      end,
+    },
+  },
   keys = {
     {
       "gi",
