@@ -1,7 +1,12 @@
 return {
-  "CopilotC-Nvim/CopilotChat.nvim",
+  "zbirenbaum/copilot.lua",
   event = "VeryLazy",
   opts = {
-    auto_insert_mode = false,
+    suggestion = {
+      enabled = false,
+      auto_trigger = true,
+      debounce = 75,
+    },
+    panel = { enabled = false },
   },
 }
