@@ -3,8 +3,6 @@
 -- Add any additional options here
 vim.opt.relativenumber = true
 vim.g.lazyvim_picker = "snacks"
-vim.g.lazyvim_python_lsp = "pyright"
-vim.g.lazyvim_python_ruff = "ruff"
 
 -- Neovide settings
 if vim.g.neovide then
