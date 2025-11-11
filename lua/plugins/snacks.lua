@@ -1,1 +1,13 @@
-return { "folke/snacks.nvim", opts = { dashboard = { enabled = false } } }
+return {
+  "folke/snacks.nvim",
+  opts = {
+    picker = {
+      sources = {
+        explorer = {},
+      },
+    },
+    dashboard = {
+      enabled = false,
+    },
+  },
+}

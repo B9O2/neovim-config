@@ -1,3 +1,0 @@
-return {
-  "nikolvs/vim-sunbather",
-}
