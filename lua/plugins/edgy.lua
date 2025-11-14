@@ -1,4 +1,3 @@
--- A Neovim plugin to easily create and manage predefined window layouts, bringing a new edge to your workflow.
 return {
   "folke/edgy.nvim",
   optional = true,

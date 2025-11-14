@@ -5,6 +5,7 @@
 vim.opt.colorcolumn = "80"
 vim.opt.number = false
 vim.opt.relativenumber = false
+
 -- Neovide settings
 if vim.g.neovide then
   vim.g.neovide_input_macos_option_key_is_meta = "only_left"

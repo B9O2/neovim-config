@@ -1,0 +1,19 @@
+return {}
+-- return {
+--   "nvim-lualine/lualine.nvim",
+--   opts = {
+--     sections = {
+--       lualine_x = {
+--         -- Add one or more components
+--         function()
+--           return require("triforce.lualine").level()
+--         end,
+--         function()
+--           return require("triforce.lualine").achievements()
+--         end,
+--         "encoding",
+--         "filetype",
+--       },
+--     },
+--   },
+-- }
