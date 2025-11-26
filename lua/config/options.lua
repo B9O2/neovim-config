@@ -4,7 +4,7 @@
 --
 vim.opt.colorcolumn = "80"
 vim.opt.number = false
-vim.opt.relativenumber = false
+vim.opt.relativenumber = true
 
 -- Neovide settings
 if vim.g.neovide then
