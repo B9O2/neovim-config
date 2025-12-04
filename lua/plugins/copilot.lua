@@ -7,7 +7,7 @@ return {
   event = "VeryLazy",
   setup = {
     suggestion = {
-      enabled = true,
+      enabled = false,
     },
     -- nes = {
     --   enabled = true, -- requires copilot-lsp as a dependency
