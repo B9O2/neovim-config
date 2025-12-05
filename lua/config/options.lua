@@ -8,6 +8,8 @@ vim.opt.relativenumber = true
 
 vim.g.lazyvim_picker = "snacks"
 
+vim.g.ai_cmp = false
+
 -- Neovide settings
 if vim.g.neovide then
   vim.g.neovide_input_macos_option_key_is_meta = "only_left"
