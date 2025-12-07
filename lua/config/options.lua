@@ -3,8 +3,12 @@
 -- Add any additional options here
 --
 vim.opt.colorcolumn = "80"
-vim.opt.number = false
-vim.opt.relativenumber = false
+vim.opt.number = true
+vim.opt.relativenumber = true
+
+vim.g.lazyvim_picker = "snacks"
+
+vim.g.ai_cmp = false
 
 -- Neovide settings
 if vim.g.neovide then
