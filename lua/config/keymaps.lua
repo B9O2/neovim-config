@@ -9,3 +9,5 @@ vim.keymap.set("v", "d", '"_d')
 vim.keymap.set("n", "c", '"_c')
 vim.keymap.set("n", "C", '"_C')
 vim.keymap.set("v", "c", '"_c')
+
+vim.keymap.set("n", "<leader>\\", "<cmd>vsplit<cr>", { desc = "Split window right" })
