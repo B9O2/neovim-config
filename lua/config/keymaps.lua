@@ -54,3 +54,6 @@ vim.keymap.set("n", "<leader>mo", function()
     vim.notify("No other marks to delete")
   end
 end, { desc = "Delete all marks except current line" })
+
+-- Delete the <C-f> keymap for file search functionality
+vim.keymap.del("n", "<C-f>")

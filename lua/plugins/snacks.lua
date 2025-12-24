@@ -9,5 +9,17 @@ return {
     dashboard = {
       enabled = false,
     },
+    scroll = {
+      enabled = false,
+    },
+  },
+  keys = {
+    {
+      "<leader><leader>",
+      function()
+        Snacks.picker.buffers()
+      end,
+      desc = "Buffers",
+    },
   },
 }
