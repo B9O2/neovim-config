@@ -7,6 +7,7 @@ vim.opt.number = true
 vim.opt.relativenumber = true
 
 vim.g.lazyvim_picker = "snacks"
+-- vim.g.lazyvim_picker = "telescope"
 
 vim.g.ai_cmp = false
 

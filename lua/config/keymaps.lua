@@ -57,3 +57,8 @@ end, { desc = "Delete all marks except current line" })
 
 -- Delete the <C-f> keymap for file search functionality
 vim.keymap.del("n", "<C-f>")
+
+-- vim.keymap.set("n", "<leader><space>", function()
+--   Snacks.picker.buffers()
+--   -- LazyVim.pick("buffers")
+-- end, { desc = "Buffers" })

@@ -15,7 +15,7 @@ return {
   },
   keys = {
     {
-      "<leader><leader>",
+      "<leader><space>",
       function()
         Snacks.picker.buffers()
       end,
