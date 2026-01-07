@@ -1,45 +1,166 @@
 return {
   "nvimdev/dashboard-nvim",
-  lazy = false, -- As https://github.com/nvimdev/dashboard-nvim/pull/450, dashboard-nvim shouldn't be lazy-loaded to properly handle stdin.
+  lazy = false,
   opts = function()
-    local logo = [[
-                                                                    
-       ██╗   ██╗███████╗ ██████╗ ██████╗ ██████╗ ███████╗          Z
-       ██║   ██║██╔════╝██╔════╝██╔═══██╗██╔══██╗██╔════╝      Z    
-       ██║   ██║███████╗██║     ██║   ██║██║  ██║█████╗     z       
-       ╚██╗ ██╔╝╚════██║██║     ██║   ██║██║  ██║██╔══╝   z         
-        ╚████╔╝ ███████║╚██████╗╚██████╔╝██████╔╝███████╗           
-         ╚═══╝  ╚══════╝ ╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝           
-                                  Have a nice day, Felix!           
-    ]]
+    -- [新增] 自动获取系统名称的函数
+    local function get_os_info()
+      -- 1. 检测 macOS
+      if vim.fn.has("macunix") == 1 then
+        return "MACOS DARWIN"
+      end
+      -- 2. 检测 Windows
+      if vim.fn.has("win32") == 1 then
+        return "WINDOWS NT"
+      end
+      -- 3. 检测 Linux 发行版 (如 Arch Linux)
+      -- 尝试读取 /etc/os-release 文件
+      local f = io.open("/etc/os-release", "r")
+      if f then
+        local content = f:read("*a")
+        f:close()
+        -- 匹配 NAME="Arch Linux" 或 NAME=Arch
+        local name = content:match('NAME="([^"]+)"') or content:match("NAME=([^\n]+)")
+        if name then
+          return string.upper(name) -- 返回大写的 "ARCH LINUX"
+        end
+      end
+      -- 4. 兜底方案
+      return "GNU/LINUX"
+    end
 
-    logo = string.rep("\n", 8) .. logo .. "\n\n"
+    -- 1. Aperture Science ASCII Logo (保持之前的配置)
+    local aperture_logo = {
+      [[              .,-:;//;:=,               ]],
+      [[          . :H@@@MM@M#H/.,+%;,          ]],
+      [[       ,/X+ +M@@M@MM%=,-%HMMM@X/,       ]],
+      [[     -+@MM; $M@@MH+-,;XMMMM@MMMM@+-     ]],
+      [[    ;@M@@M- XM@X;. -+XXXXXHHH@M@M#@/.   ]],
+      [[  ,%MM@@MH ,@%=             .---=-=:=,. ]],
+      [[  =@#@@@MX.,                -%HX$$%%%:; ]],
+      [[ =-./@M@M$                   .;@MMMM@MM:]],
+      [[ X@/ -$MM/                    . +MM@@@M$]],
+      [[ ,@M@H: :@:                    . =X#@@@@-]],
+      [[ ,@@@MMX, .                    /H- ;@M@M=]],
+      [[ .H@@@@M@+,                    %MM+..%#$.]],
+      [[  /MMMM@MMH/.                  XM@MH; =;]],
+      [[   /%+%$XHH@$=              , .H@@@@MX, ]],
+      [[    .=--------.           -%H.,@@@@@MX, ]],
+      [[    .%MM@@@HHHXX$$$%+- .:$MMX =M@@MM%.  ]],
+      [[      =XMMM@MM@MM#H;,-+HMM@M+ /MMMX=    ]],
+      [[        =%@M@M#@$-.=$@MM@@@M; %M%=      ]],
+      [[          ,:+$+-,/H#MMMMMMM@= =,        ]],
+      [[                =++%%%%+/:-.            ]],
+    }
+
+    -- 留白控制
+    local top_padding = 5
+    local bottom_padding = 3
+    for _ = 1, top_padding do
+      table.insert(aperture_logo, 1, "")
+    end
+    for _ = 1, bottom_padding do
+      table.insert(aperture_logo, "")
+    end
 
     local opts = {
       theme = "doom",
-      hide = {
-        -- this is taken care of by lualine
-        -- enabling this messes up the actual laststatus setting after loading a file
-        statusline = false,
-      },
+      hide = { statusline = false },
       config = {
-        header = vim.split(logo, "\n"),
-        -- stylua: ignore
+        header = aperture_logo,
+        -- 2. 按钮配置 (保持不变)
         center = {
-          { action = 'lua LazyVim.pick()()',                           desc = " Find File",       icon = " ", key = "f" },
-          { action = "ene | startinsert",                              desc = " New File",        icon = " ", key = "n" },
-          { action = 'lua LazyVim.pick("oldfiles")()',                 desc = " Recent Files",    icon = " ", key = "r" },
-          { action = 'lua LazyVim.pick("live_grep")()',                desc = " Find Text",       icon = " ", key = "g" },
-          { action = 'lua LazyVim.pick.config_files()()',              desc = " Config",          icon = " ", key = "c" },
-          { action = 'lua require("persistence").load()',              desc = " Restore Session", icon = " ", key = "s" },
-          { action = "LazyExtras",                                     desc = " Lazy Extras",     icon = " ", key = "x" },
-          { action = "Lazy",                                           desc = " Lazy",            icon = "󰒲 ", key = "l" },
-          { action = function() vim.api.nvim_input("<cmd>qa<cr>") end, desc = " Quit",            icon = " ", key = "q" },
+          {
+            action = "lua LazyVim.pick()()",
+            desc = " Acquire Subject Data",
+            icon = " ",
+            key = "f",
+          },
+          {
+            action = "ene | startinsert",
+            desc = " Init New Protocol",
+            icon = " ",
+            key = "n",
+          },
+          {
+            action = 'lua LazyVim.pick("oldfiles")()',
+            desc = " Previous Attempts",
+            icon = " ",
+            key = "r",
+          },
+          {
+            action = 'lua LazyVim.pick("live_grep")()',
+            desc = " Data Mining",
+            icon = " ",
+            key = "g",
+          },
+          {
+            action = "lua LazyVim.pick.config_files()()",
+            desc = " Facility Settings",
+            icon = " ",
+            key = "c",
+          },
+          {
+            action = 'lua require("persistence").load()',
+            desc = " Restore Consciousness",
+            icon = " ",
+            key = "s",
+          },
+          {
+            action = "LazyExtras",
+            desc = " Enrichment Add-ons",
+            icon = " ",
+            key = "x",
+          },
+          {
+            action = "Lazy",
+            desc = " Core Management",
+            icon = "󰒲 ",
+            key = "l",
+          },
+          {
+            action = function()
+              vim.api.nvim_input("<cmd>qa<cr>")
+            end,
+            desc = " Cease Operations",
+            icon = " ",
+            key = "q",
+          },
         },
+
+        -- 3. 动态 Footer
         footer = function()
           local stats = require("lazy").stats()
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
-          return { "⚡ Neovim loaded " .. stats.loaded .. "/" .. stats.count .. " plugins in " .. ms .. "ms" }
+
+          -- 调用函数获取真实的 OS 名称
+          local detected_os = get_os_info()
+
+          local quotes = {
+            "The cake is a lie.",
+            "This was a triumph. I'm making a note here: HUGE SUCCESS.",
+            "Please note that we have added a consequence for failure.",
+            "Science isn't about WHY. It's about WHY NOT.",
+            "The Enrichment Center reminds you that the Companion Cube will never threaten to stab you.",
+            "Unbelievable. You, [SUBJECT NAME HERE], must be the pride of [SUBJECT HOMETOWN HERE].",
+            "Quit now and cake will be served immediately.",
+          }
+          math.randomseed(os.time())
+          local random_quote = quotes[math.random(#quotes)]
+
+          return {
+            "",
+            "┌─ [ SYSTEM STATUS ] ──────────────────────┐",
+            "│  Test Subject   : FELIX                  │",
+            -- 这里使用 detected_os 变量，并且用 string.format 控制长度
+            "│  Chamber OS     : "
+              .. string.format("%-23s", detected_os)
+              .. "│",
+            "│  Startup Latency: " .. string.format("%-23s", ms .. "ms") .. "│",
+            "│  Active Modules : " .. string.format("%-23s", stats.loaded .. "/" .. stats.count) .. "│",
+            "└──────────────────────────────────────────┘",
+            "",
+            "> " .. random_quote,
+          }
         end,
       },
     }
@@ -49,7 +170,6 @@ return {
       button.key_format = "  %s"
     end
 
-    -- open dashboard after closing lazy
     if vim.o.filetype == "lazy" then
       vim.api.nvim_create_autocmd("WinClosed", {
         pattern = tostring(vim.api.nvim_get_current_win()),
