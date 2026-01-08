@@ -1,33 +1,26 @@
+function GetOSInfo()
+  if vim.fn.has("macunix") == 1 then
+    return "MACOS DARWIN"
+  end
+  if vim.fn.has("win32") == 1 then
+    return "WINDOWS NT"
+  end
+  local f = io.open("/etc/os-release", "r")
+  if f then
+    local content = f:read("*a")
+    f:close()
+    local name = content:match('NAME="([^"]+)"') or content:match("NAME=([^\n]+)")
+    if name then
+      return string.upper(name)
+    end
+  end
+  return "GNU/LINUX"
+end
+
 return {
   "nvimdev/dashboard-nvim",
   lazy = false,
   opts = function()
-    -- [新增] 自动获取系统名称的函数
-    local function get_os_info()
-      -- 1. 检测 macOS
-      if vim.fn.has("macunix") == 1 then
-        return "MACOS DARWIN"
-      end
-      -- 2. 检测 Windows
-      if vim.fn.has("win32") == 1 then
-        return "WINDOWS NT"
-      end
-      -- 3. 检测 Linux 发行版 (如 Arch Linux)
-      -- 尝试读取 /etc/os-release 文件
-      local f = io.open("/etc/os-release", "r")
-      if f then
-        local content = f:read("*a")
-        f:close()
-        -- 匹配 NAME="Arch Linux" 或 NAME=Arch
-        local name = content:match('NAME="([^"]+)"') or content:match("NAME=([^\n]+)")
-        if name then
-          return string.upper(name) -- 返回大写的 "ARCH LINUX"
-        end
-      end
-      -- 4. 兜底方案
-      return "GNU/LINUX"
-    end
-
     -- 1. Aperture Science ASCII Logo (保持之前的配置)
     local aperture_logo = {
       [[              .,-:;//;:=,               ]],
@@ -133,7 +126,6 @@ return {
           local ms = (math.floor(stats.startuptime * 100 + 0.5) / 100)
 
           -- 调用函数获取真实的 OS 名称
-          local detected_os = get_os_info()
 
           local quotes = {
             "The cake is a lie.",
@@ -153,7 +145,7 @@ return {
             "│  Test Subject   : FELIX                  │",
             -- 这里使用 detected_os 变量，并且用 string.format 控制长度
             "│  Chamber OS     : "
-              .. string.format("%-23s", detected_os)
+              .. string.format("%-23s", GetOSInfo())
               .. "│",
             "│  Startup Latency: " .. string.format("%-23s", ms .. "ms") .. "│",
             "│  Active Modules : " .. string.format("%-23s", stats.loaded .. "/" .. stats.count) .. "│",
