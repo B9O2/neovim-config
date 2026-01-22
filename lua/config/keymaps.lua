@@ -5,7 +5,9 @@
 -- Which-key groups
 local wk = require("which-key")
 wk.add({
-  { "<leader>m", group = "marks" },
+  { "<leader>m", group = "marks", icon = {
+    icon = "󰃀",
+  } },
 })
 
 vim.keymap.set("n", "d", '"_d')
