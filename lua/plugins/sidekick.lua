@@ -1,9 +1,18 @@
+local haunt_sk = require("haunt.sidekick")
 return {
   "folke/sidekick.nvim",
-  lazy = false,
+  cmd = "Sidekick",
+  ---@class sidekick.Config
   opts = {
-    nes = {
-      enabled = false,
+    cli = {
+      prompts = {
+        haunt_all = function()
+          return haunt_sk.get_locations()
+        end,
+        haunt_buffer = function()
+          return haunt_sk.get_locations({ current_buffer = true })
+        end,
+      },
     },
   },
 }
