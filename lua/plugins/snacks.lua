@@ -3,7 +3,11 @@ return {
   opts = {
     picker = {
       sources = {
-        explorer = {},
+        explorer = {
+          exclude = { ".DS_Store" },
+          include = { ".git" },
+          hidden = true,
+        },
       },
     },
     dashboard = {
