@@ -22,6 +22,9 @@ vim.keymap.set("n", "q", "<Nop>", { desc = "Disable macro recording" })
 
 vim.keymap.set("n", "<leader>\\", "<cmd>vsplit<cr>", { desc = "Split window right" })
 
+vim.keymap.del("n", "H")
+vim.keymap.del("n", "L")
+
 -- Marks
 vim.keymap.set("n", "<leader>md", function()
   local line = vim.api.nvim_win_get_cursor(0)[1]
