@@ -18,9 +18,11 @@ return {
     },
     cli = {
       win = {
-        layout = "right",
-        split = {
-          height = 15,
+        layout = "float",
+        float = {
+          width = 0.6,
+          height = 0.8,
+          border = "rounded",
         },
       },
       prompts = {
