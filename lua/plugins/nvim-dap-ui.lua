@@ -27,7 +27,17 @@ return {
     vim.api.nvim_create_autocmd("VimResized", {
       group = vim.api.nvim_create_augroup("dapui_resize", { clear = true }),
       callback = function()
-        dapui.open({ reset = true })
+        local sidebar_open = false
+        for _, win in ipairs(vim.api.nvim_tabpage_list_wins(0)) do
+          local buf = vim.api.nvim_win_get_buf(win)
+          if vim.bo[buf].filetype:match("dapui") then
+            sidebar_open = true
+            break
+          end
+        end
+        if sidebar_open then
+          dapui.open({ reset = true })
+        end
       end,
     })
   end,
